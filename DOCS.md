@@ -1,4 +1,4 @@
-# 📦 Product Microservice - Documentación Técnica
+# Product Microservice - Documentacion Tecnica
 
 ## Tabla de Contenidos
 

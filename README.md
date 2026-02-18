@@ -1,98 +1,136 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Product Microservice
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Microservicio dedicado a la gestion de productos bancarios y usuarios con persistencia en MongoDB.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Informacion del Proyecto
 
-## Description
+| Propiedad | Valor |
+|-----------|-------|
+| Nombre | products |
+| Puerto | 4000 |
+| Prefijo | `/products` |
+| Framework | NestJS 11 |
+| Base de Datos | MongoDB Atlas |
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Documentacion Tecnica
 
-## Project setup
+Para documentacion detallada sobre schemas de base de datos, repositorios, endpoints y arquitectura, consultar el archivo [DOCS.md](./DOCS.md).
 
-```bash
-$ npm install
-```
+## Requisitos Previos
 
-## Compile and run the project
+- Node.js 20.x o superior
+- npm 10.x o superior
+- Archivo de variables de entorno `.env`
 
-```bash
-# development
-$ npm run start
+## Configuracion de Variables de Entorno
 
-# watch mode
-$ npm run start:dev
+Las variables de entorno fueron enviadas por correo electronico en el archivo `.env.product`.
 
-# production mode
-$ npm run start:prod
-```
+1. Copiar el archivo recibido a la raiz del proyecto:
+   ```bash
+   cp /ruta/del/archivo/.env.product ./.env
+   ```
 
-## Run tests
+2. Verificar que el archivo `.env` existe en la raiz del proyecto `product/`
+
+Las variables incluyen:
+- URI de conexion a MongoDB Atlas (base de datos en la nube)
+- Credenciales de Grafana Cloud para observabilidad y metricas
+- Configuracion de JWT para validacion de tokens
+
+**Nota:** No se requiere Docker ni instalacion local de MongoDB. La base de datos esta alojada en MongoDB Atlas y las metricas se envian directamente a Grafana Cloud.
+
+## Instalacion
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+npm install
 ```
 
-## Deployment
+## Ejecucion
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+### Orden de ejecucion de servicios
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+Este microservicio debe ejecutarse PRIMERO antes que los demas servicios:
+
+1. **Primero:** Microservicio Product (este servicio - puerto 4000)
+2. **Segundo:** API Gateway (puerto 5000)
+3. **Tercero:** Frontend Bank (puerto 3000)
+
+### Comandos
 
 ```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+# Modo desarrollo (con hot reload)
+npm run start:dev
+
+# Modo produccion
+npm run build
+npm run start:prod
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+El servicio estara disponible en `http://localhost:4000`.
 
-## Resources
+### Verificar que el servicio esta corriendo
 
-Check out a few resources that may come in handy when working with NestJS:
+```bash
+curl http://localhost:4000/health
+```
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+## Testing
 
-## Support
+```bash
+# Tests unitarios
+npm run test
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+# Tests con coverage
+npm run test:cov
 
-## Stay in touch
+# Tests e2e
+npm run test:e2e
+```
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+## Scripts Disponibles
 
-## License
+| Script | Descripcion |
+|--------|-------------|
+| `npm run start:dev` | Inicia en modo desarrollo con hot reload |
+| `npm run start:prod` | Inicia en modo produccion |
+| `npm run build` | Compila el proyecto |
+| `npm run test` | Ejecuta tests unitarios |
+| `npm run test:cov` | Ejecuta tests con reporte de coverage |
+| `npm run lint` | Ejecuta el linter |
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+## Endpoints de Health Check
+
+| Endpoint | Descripcion |
+|----------|-------------|
+| `/health` | Estado general del servicio |
+| `/health/liveness` | Verificacion de vida |
+| `/health/readiness` | Verificacion de preparacion |
+| `/metrics` | Metricas Prometheus |
+
+## Estructura del Proyecto
+
+```
+product/
+├── src/
+│   ├── main.ts
+│   ├── app.module.ts
+│   ├── common/
+│   │   ├── correlation-id/
+│   │   └── observability/
+│   └── modules/
+│       ├── applications/
+│       ├── auth/
+│       ├── products/
+│       │   └── schemas/      # Schemas de MongoDB
+│       └── users/
+│           └── schemas/      # Schemas de MongoDB
+└── test/
+```
+
+## Colecciones de Base de Datos
+
+| Coleccion | Descripcion |
+|-----------|-------------|
+| users | Informacion de usuarios registrados |
+| products | Productos bancarios de los usuarios |
