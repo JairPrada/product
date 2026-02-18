@@ -12,9 +12,23 @@ Microservicio dedicado a la gestion de productos bancarios y usuarios con persis
 | Framework | NestJS 11 |
 | Base de Datos | MongoDB Atlas |
 
-## Documentacion Tecnica
+## Documentacion
 
-Para documentacion detallada sobre schemas de base de datos, repositorios, endpoints y arquitectura, consultar el archivo [DOCS.md](./DOCS.md).
+### Documentacion de Arquitectura General
+
+Para entender la arquitectura completa del sistema, flujos de datos y como se conectan los servicios, consultar:
+
+- [Arquitectura del Sistema (GitHub)](https://github.com/JairPrada/frontend-bank/blob/main/ARCHITECTURE.md)
+
+### Documentacion Swagger (OpenAPI)
+
+Este servicio expone documentacion interactiva de la API con Swagger. Una vez el servicio este corriendo, acceder a:
+
+- **Swagger UI:** http://localhost:4000/api
+
+### Documentacion Tecnica del Proyecto
+
+Para documentacion detallada sobre schemas de base de datos, repositorios y endpoints, consultar el archivo [DOCS.md](./DOCS.md).
 
 ## Requisitos Previos
 
