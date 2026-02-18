@@ -30,6 +30,10 @@ Este servicio expone documentacion interactiva de la API con Swagger. Una vez el
 
 Para documentacion detallada sobre schemas de base de datos, repositorios y endpoints, consultar el archivo [DOCS.md](./DOCS.md).
 
+### Historias de Usuario
+
+Para consultar las historias de usuario que describen las funcionalidades implementadas, ver [user-stories/README.md](./user-stories/README.md).
+
 ## Requisitos Previos
 
 - Node.js 20.x o superior
